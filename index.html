@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roof Vegetable Garden-Plant Calculator</title>
+    <style>
+        body {
+            margin: 10px;
+            font-family:"Roboto", sans-serif,Verdana, Geneva, Tahoma;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(270px,1fr));
+            background-color: #fff;
+            color: #000;
+        }
+        .wrapper2{
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(200px,4fr));
+            margin-bottom: 2em;
+        }
+        .box {
+            background-color: #49454C;
+            color: #E0E2DD;
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 150%;
+        }
+        .e {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
+        }
+        button{
+            padding: 5px 10px;
+            border-radius:3px;
+            background: #727166;
+            color: #E0E2DD;
+        }
+        h2{
+            color: #D9CFA3;
+        }
+
+        li{
+            list-style-type: none;
+        }
+
+        span{
+            font-style: italic;
+            color: #A78561;
+        }
+
+        #demo{
+            text-transform:alphabetic;
+        }
+
+        #addT{
+            display: none
+        }
+
+        .nPlants{
+            font-size: 2em
+        }
+        .oops{
+            color:#CDAE45;
+            font-size:0.5em;
+            margin-left:10px
+        }
+        .reset{
+            text-align:center;
+            width:45%;
+            height: auto;
+            margin-top: 10px;
+            padding: 15px;
+            background-color:#A78561;
+            color: #49454C;
+            border-radius:5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Like growing your own food, let's begin exploring roof vegetable garden-plant calculator</h2>
+
+    <div class="wrapper">
+        <div class='box'>
+            <select id="myText">
+                <option value="select seed">Select Seed</option>
+                <optgroup label="May - June Seeds">
+                    <option value="okra">Okra</option>
+                    <option value="bitterGourd">Bitter Gourd</option>
+                </optgroup>
+                <optgroup label="July - Sept Seeds">
+                    <option value="peas">Peas</option>
+                    <option value="bottleGourd">Bottle Gourd</option>
+                </optgroup>
+            </select>
+            <button onclick="myFunction()">How much one can pluck from a plant?</button>
+            <div id='demo' class="box"></div>
+        </div>
+
+        <div id='mem' class="box">
+            <h3>Members at home?</h3>
+            <sup><span id="zero">Please enter number only</span></sup><br>
+            <input id="memCount" type="number">
+            <button onclick="member()" id='pma'>After family member count lets make a best guess of Per member appetite</button>
+        </div>
+        <div id="aCs" class="box">
+            <h3>Average Appetite per member</h3>
+            <sup>Cooked Vegetable Consumption per member is the thought in mind, make a best guess in grams<br><span id = "zero1">for example 90 grams</span> </sup>
+            <br><input id="ac" type="number">
+            <button onclick="avgConsumptionPerPerson()">Now lets think of number of times you would love to relish selected veg during the season</button>
+        </div>
+        <div id="repRec" class="box">
+            <h3>:) And how many times would you cook this veg during the season?</h3>
+            <span id="zero2">for example 10 times this season :)</span>
+            <input id="rr" type="number">
+            <button onclick="numberOfTimesRepeated()">Finally, The number of plants to grow</button>
+        </div>
+    </div>
+    <div id='final' class="wrapper2">
+        <h1>Here is the Number of Plants you need to Grow</h1>
+        <div id="num" class="box e"></div>
+    </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92773937-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-92773937-2');
+
+        let x;
+        let seed;
+        let plantProp = new String('Per plant yield of');
+
+        document.getElementById("demo").innerHTML = 
+        `Pick any seed to see near about yield per plant. As of now the calculator is evolving`;
+
+        //seed collection
+        let vegSeedis = {
+            bitterGourd: 500, 
+            okra: 200, 
+            peas: 300, 
+            bottleGourd: 1500,
+
+            selectedSeed(){
+                for(key in vegSeedis){
+                    if (key === document.getElementById('myText').value) {
+                        document.getElementById("mem").style.display = 'block';
+                        return seed = vegSeedis[key];
+                    }
+                }
+            }
+        }
+
+        const start = performance.now();
+        vegSeedis.selectedSeed();
+        const end = performance.now();
+        console.log(`Call to ${vegSeedis.selectedSeed()} took ${end - start} ms.`);
+
+        function myFunction() {
+            x = document.getElementById("myText").value;
+            plantCalc.innerHTML = `You selected ${x.toUpperCase()}`;
+            vegSeedis.selectedSeed();
+
+            switch (x) {
+
+                case 'okra':
+                    plantCalc.innerHTML =
+                        `${plantProp} ${x.toUpperCase()} is near about <h2>${vegSeedis.okra}grams</h2>`;
+                    seed = vegSeedis.okra;
+                    break;
+
+                case 'bitterGourd':
+                    plantCalc.innerHTML =
+                        `${plantProp} ${x.toUpperCase()} is <h2>${vegSeedis.bitterGourd}grams</h2>`;
+                    seed = vegSeedis.bitterGourd;
+                    break;
+
+                case 'peas':
+                    plantCalc.innerHTML =
+                        `${plantProp} ${x.toUpperCase()} is <h2>${vegSeedis.peas}grams</h2>`;
+                    seed = vegSeedis.peas;
+                    break;
+
+                case 'bottleGourd':
+                    plantCalc.innerHTML =
+                        `${plantProp} ${x.toUpperCase()} is near about <h2>${vegSeedis.bottleGourd}grams</h2>`;
+                    seed = vegSeedis.bottleGourd;
+                    break;
+
+                case 'select seed':
+                    plantCalc.innerHTML = 'Pick any seed from the list'; alert('Pick any seed');
+                    break;
+
+                default:
+                    plantCalc.innerHTML = 'Pick any seed';
+
+            }
+        }
+
+        let m,r,c,y;
+
+        let member =()=>{
+            m = document.getElementById('memCount').value;
+            console.log(`Number of members are ${m}`);
+            if(m<=0){
+                document.getElementById('zero').style.color = "#D03D66";
+                return
+            }
+            document.getElementById('aCs').style.display = 'block';
+            return Number(m);
+        }
+
+        let avgConsumptionPerPerson = () => {
+            c = document.getElementById('ac').value;
+            if(c<=0|| c < 5){
+                document.getElementById('zero1').style.color = "#D03D66";
+                return document.getElementById('zero1').textContent = `Do you have diet restrictions for ${x.toUpperCase()}?`
+            }
+            console.log('average consumption per member '+ c);
+            repeatVeg.style.display = 'block';
+        }
+
+        let numberOfTimesRepeated = ()=>{
+            r = document.getElementById('rr').value;
+            if(r <= 0){
+                document.getElementById('zero2').style.color = "#D03D66";
+                return
+            }
+            document.getElementById('final').style.display = 'block';
+            howManyPlants();
+        }
+
+        let howManyPlants = ()=>{
+            y = Math.round(m*c*r/seed);
+            document.getElementById('num').innerHTML = `<span>Please Consult an expert too. 
+            Plant yield calculated here is tentative and may vary as per weather conditions including the love and care you give to the plants</span><br>
+            <h2 class='nPlants'>${y} plants can feed you and your loved ones this season, take good care of the plants too :) </h2> <span>Thanks to Organic food in Plates</span><br>
+            <div onclick="reset()" class="reset">Sow a Different Seed</div>`;
+        }
+
+        let reset = () => {
+            window.location.reload(true);
+        }
+
+        let plantCalc = document.getElementById("demo");
+        let repeatVeg = document.getElementById('repRec');
+        document.getElementById("mem").style.display = 'none';
+        document.getElementById('aCs').style.display = 'none';
+        document.getElementById('repRec').style.display = 'none';
+        document.getElementById('final').style.display = 'none';
+    </script>
+</body>
+</html>
